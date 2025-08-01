@@ -1,0 +1,75 @@
+body {
+  margin: 0;
+  overflow: hidden;
+  background: #000;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.buttons {
+  position: absolute;
+  bottom: 60px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  z-index: 2;
+}
+
+.neon-btn {
+  padding: 10px 20px;
+  text-decoration: none;
+  background: #000;
+  border: 2px solid #0ff;
+  color: #0ff;
+  font-weight: bold;
+  border-radius: 5px;
+  box-shadow: 0 0 10px #0ff, 0 0 20px #0ff inset;
+  transition: 0.3s;
+}
+
+.neon-btn:hover {
+  background: #0ff;
+  color: #000;
+}
+
+#victory-message {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.95);
+  color: white;
+  z-index: 999;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.victory-box {
+  text-align: center;
+  background: #111;
+  padding: 40px;
+  border: 2px solid #0ff;
+  box-shadow: 0 0 20px #0ff;
+  border-radius: 15px;
+}
+
+.victory-box button {
+  margin-top: 20px;
+  padding: 10px 30px;
+  font-size: 1.2rem;
+  background: #0ff;
+  border: none;
+  color: #000;
+  cursor: pointer;
+  border-radius: 10px;
+}
