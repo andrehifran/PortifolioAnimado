@@ -24,6 +24,9 @@ document.addEventListener("click", () => {
   shootSound.play();
 });
 
+const profilePic = document.getElementById("profile-pic");
+let profilePicHealth = 100;
+
 const phrase = "Sou apaixonado por tecnologia";
 const nameText = "André Hifran";
 
@@ -86,24 +89,56 @@ function drawBullets() {
 }
 
 function detectHits() {
-  bullets.forEach((b) => {
-    fallingLetters.forEach((t) => {
-      if (
-        !t.falling &&
-        b.x >= t.x &&
-        b.x <= t.x + 15 &&
-        b.y >= t.y - 20 &&
-        b.y <= t.y
-      ) {
-        t.falling = true;
-        t.hit = true;
-        b.y = -999;
-      }
-    });
-  });
+  const picRect = profilePic.getBoundingClientRect();
 
-  const allGone = fallingLetters.every((t) => t.hit);
-  if (allGone && typingIndex >= phrase.length) {
+  // Use a reverse loop to safely remove bullets without skipping items
+  for (let i = bullets.length - 1; i >= 0; i--) {
+    const b = bullets[i];
+    let bulletHit = false;
+
+    // 1. Check for collision with the profile picture
+    if (
+      profilePicHealth > 0 &&
+      b.x >= picRect.left &&
+      b.x <= picRect.right &&
+      b.y >= picRect.top &&
+      b.y <= picRect.bottom
+    ) {
+      profilePicHealth -= 5; // Decrease health
+      profilePic.style.opacity = profilePicHealth / 100;
+      if (profilePicHealth <= 0) {
+        profilePic.style.display = "none";
+      }
+      bulletHit = true;
+    }
+
+    // 2. If no hit on the picture, check for collision with letters
+    if (!bulletHit) {
+      for (const t of fallingLetters) {
+        if (
+          !t.hit && // only check letters that haven't been hit
+          b.x >= t.x &&
+          b.x <= t.x + 15 &&
+          b.y >= t.y - 20 &&
+          b.y <= t.y
+        ) {
+          t.falling = true;
+          t.hit = true;
+          bulletHit = true;
+          break; // Exit the inner loop once a letter is hit by this bullet
+        }
+      }
+    }
+
+    // 3. If the bullet hit anything, remove it from the array
+    if (bulletHit) {
+      bullets.splice(i, 1);
+    }
+  }
+
+  // Check for victory condition
+  const allLettersGone = fallingLetters.every((t) => t.hit);
+  if (allLettersGone && typingIndex >= phrase.length) {
     showVictory();
   }
 }
