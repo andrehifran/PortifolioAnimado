@@ -91,12 +91,10 @@ function drawBullets() {
 function detectHits() {
   const picRect = profilePic.getBoundingClientRect();
 
-  // Use a reverse loop to safely remove bullets without skipping items
   for (let i = bullets.length - 1; i >= 0; i--) {
     const b = bullets[i];
     let bulletHit = false;
 
-    // 1. Check for collision with the profile picture
     if (
       profilePicHealth > 0 &&
       b.x >= picRect.left &&
@@ -104,7 +102,7 @@ function detectHits() {
       b.y >= picRect.top &&
       b.y <= picRect.bottom
     ) {
-      profilePicHealth -= 5; // Decrease health
+      profilePicHealth -= 5;
       profilePic.style.opacity = profilePicHealth / 100;
       if (profilePicHealth <= 0) {
         profilePic.style.display = "none";
@@ -112,11 +110,10 @@ function detectHits() {
       bulletHit = true;
     }
 
-    // 2. If no hit on the picture, check for collision with letters
     if (!bulletHit) {
       for (const t of fallingLetters) {
         if (
-          !t.hit && // only check letters that haven't been hit
+          !t.hit &&
           b.x >= t.x &&
           b.x <= t.x + 15 &&
           b.y >= t.y - 20 &&
@@ -125,20 +122,18 @@ function detectHits() {
           t.falling = true;
           t.hit = true;
           bulletHit = true;
-          break; // Exit the inner loop once a letter is hit by this bullet
+          break;
         }
       }
     }
 
-    // 3. If the bullet hit anything, remove it from the array
     if (bulletHit) {
       bullets.splice(i, 1);
     }
   }
 
-  // Check for victory condition
   const allLettersGone = fallingLetters.every((t) => t.hit);
-  if (allLettersGone && typingIndex >= phrase.length) {
+  if (allLettersGone && profilePicHealth <= 0 && typingIndex >= phrase.length) {
     showVictory();
   }
 }
@@ -156,3 +151,24 @@ function draw() {
   requestAnimationFrame(draw);
 }
 draw();
+
+// --- Lógica da Mensagem do Avatar ---
+const speechBubble = document.getElementById('speech-bubble');
+const messageText = 'Para conhecer os meus projetos, destrua todas as letras e a minha imagem.';
+let charIndex = 0;
+
+function typeMessage() {
+  if (charIndex < messageText.length) {
+    speechBubble.innerHTML += messageText.charAt(charIndex);
+    charIndex++;
+    setTimeout(typeMessage, 50); // Velocidade da digitação
+  } 
+}
+
+// Inicia o efeito de digitação depois de um pequeno atraso
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        speechBubble.style.opacity = 1; // Torna o balão visível
+        typeMessage();
+    }, 1000);
+});
