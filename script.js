@@ -46,7 +46,7 @@ function initLetters() {
     fallingLetters.push({
       char: nameText[i],
       x: canvas.width / 2 - nameText.length * 10 + i * 20,
-      y: 100,
+      y: 50,
       falling: false,
       hit: false
     });
@@ -59,7 +59,7 @@ function initLetters() {
       fallingLetters.push({
         char: phrase[i],
         x: canvas.width / 2 - phrase.length * 8 + i * 16,
-        y: 150,
+        y: 90,
         falling: false,
         hit: false
       });

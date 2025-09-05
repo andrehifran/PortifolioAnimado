@@ -286,11 +286,12 @@ body.light-mode .content-section {
 
 .content-section h2 {
   color: var(--primary-color);
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 2em;
   border-bottom: 2px solid var(--primary-color);
   padding-bottom: 10px;
-  margin-top: 0;
-  margin-bottom: 25px;
-  font-size: 1.8em;
 }
 
 .experience-item {
