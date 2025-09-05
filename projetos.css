@@ -66,6 +66,9 @@ p {
   animation-delay: 1.05s;
 }
 .project-inner {
+  display: block;
+  text-decoration: none;
+  color: inherit;
   position: relative;
   width: 100%;
   height: 100%;
