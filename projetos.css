@@ -239,6 +239,29 @@ footer {
   }
 }
 
+.about-content {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.about-pic {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--primary-color);
+  flex-shrink: 0;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.about-content p {
+  margin: 0;
+  animation: none;
+  opacity: 1;
+  line-height: 1.7;
+}
+
 .content-section {
   max-width: 800px;
   margin: 60px auto;
@@ -304,6 +327,13 @@ body.light-mode .content-section {
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 .courses-list li:hover { transform: translateX(5px); box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+
+@media (max-width: 768px) {
+  .about-content {
+    flex-direction: column;
+    text-align: center;
+  }
+}
 
 /* Testimonials Carousel */
 .testimonial-carousel {

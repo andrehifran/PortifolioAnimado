@@ -17,8 +17,13 @@ document.addEventListener("mousemove", (e) => {
 });
 
 document.addEventListener("click", () => {
-  for (let i = -1; i <= 1; i++) {
-    bullets.push({ x: airplaneX + 40 + i * 10, y: airplaneY });
+  // Cria uma rajada de 5 tiros com um pequeno spread
+  for (let i = -2; i <= 2; i++) {
+    bullets.push({
+      x: airplaneX + 38, // Centraliza o tiro
+      y: airplaneY,
+      vx: i * 1.5, // Velocidade horizontal para o "spread"
+    });
   }
   shootSound.currentTime = 0;
   shootSound.play();
@@ -82,10 +87,18 @@ function drawLetters() {
 
 function drawBullets() {
   ctx.fillStyle = "red";
-  bullets.forEach((b) => {
-    ctx.fillRect(b.x, b.y, 4, 10);
-    b.y -= 10;
-  });
+  // Itera de trás para frente para poder remover itens do array sem problemas
+  for (let i = bullets.length - 1; i >= 0; i--) {
+    const b = bullets[i];
+    ctx.fillRect(b.x, b.y, 5, 12); // Balas um pouco maiores
+    b.x += b.vx; // Adiciona a velocidade horizontal
+    b.y -= 15; // Aumenta a velocidade vertical
+
+    // Remove a bala se ela sair da tela
+    if (b.y < 0) {
+      bullets.splice(i, 1);
+    }
+  }
 }
 
 function detectHits() {
