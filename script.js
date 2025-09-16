@@ -10,6 +10,8 @@ let airplaneY = canvas.height - 100;
 
 let bullets = [];
 let shootSound = document.getElementById("shoot-sound");
+let gameState = 'playing';
+let animationFrameId;
 
 function handleMouseMove(e) {
   airplaneX = e.clientX - 40;
@@ -34,6 +36,8 @@ document.addEventListener("touchstart", handleTouch, { passive: false });
 document.addEventListener("touchmove", handleTouch, { passive: false });
 
 document.addEventListener("click", () => {
+  if (gameState !== 'playing') return;
+
   // Cria uma rajada de 5 tiros com um pequeno spread
   for (let i = -2; i <= 2; i++) {
     bullets.push({
@@ -163,22 +167,27 @@ function detectHits() {
   }
 
   const allLettersGone = fallingLetters.every((t) => t.hit);
-  if (allLettersGone && profilePicHealth <= 0 && typingIndex >= phrase.length) {
+  if (gameState === 'playing' && allLettersGone && profilePicHealth <= 0 && typingIndex >= phrase.length) {
     showVictory();
   }
 }
 
 function showVictory() {
+  gameState = 'victory';
+  if (animationFrameId) {
+    cancelAnimationFrame(animationFrameId);
+  }
   document.getElementById("victory-message").style.display = "flex";
 }
 
 function draw() {
+  if (gameState !== 'playing') return;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.drawImage(airplane, airplaneX, airplaneY, 80, 80);
   drawLetters();
   drawBullets();
   detectHits();
-  requestAnimationFrame(draw);
+  animationFrameId = requestAnimationFrame(draw);
 }
 draw();
 
