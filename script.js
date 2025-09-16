@@ -11,31 +11,27 @@ let airplaneY = canvas.height - 100;
 let bullets = [];
 let shootSound = document.getElementById("shoot-sound");
 
-function handlePointerMove(e) {
-  let x, y;
-  // Verifica se é um evento de toque
-  if (e.touches && e.touches.length > 0) {
-    x = e.touches[0].clientX;
-    y = e.touches[0].clientY;
-  } else {
-    // Senão, é um evento de mouse
-    x = e.clientX;
-    y = e.clientY;
-  }
+function handleMouseMove(e) {
+  airplaneX = e.clientX - 40;
+  airplaneY = e.clientY - 20;
+}
 
-  // Garante que temos as coordenadas antes de atualizar
-  if (x !== undefined && y !== undefined) {
-    airplaneX = x - 40;
-    airplaneY = y - 20;
+function handleTouch(e) {
+  // Previne o comportamento padrão do navegador (como rolar a página) no touchmove
+  if (e.type === "touchmove") {
+    e.preventDefault();
+  }
+  // Garante que há um toque na tela
+  if (e.touches && e.touches.length > 0) {
+    const touch = e.touches[0];
+    airplaneX = touch.clientX - 40;
+    airplaneY = touch.clientY - 20;
   }
 }
 
-document.addEventListener("mousemove", handlePointerMove);
-document.addEventListener("touchstart", handlePointerMove, { passive: true });
-document.addEventListener("touchmove", (e) => {
-  e.preventDefault(); // Previne o scroll da página ao arrastar o dedo
-  handlePointerMove(e);
-}, { passive: false });
+document.addEventListener("mousemove", handleMouseMove);
+document.addEventListener("touchstart", handleTouch, { passive: false });
+document.addEventListener("touchmove", handleTouch, { passive: false });
 
 document.addEventListener("click", () => {
   // Cria uma rajada de 5 tiros com um pequeno spread
