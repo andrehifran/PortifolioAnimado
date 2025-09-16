@@ -281,6 +281,7 @@ body.light-mode .content-section {
 #about { animation-delay: 0.5s; }
 #experience { animation-delay: 1.6s; }
 #education { animation-delay: 1.7s; }
+#skills { animation-delay: 0.7s; }
 #courses { animation-delay: 1.8s; }
 #testimonials { animation-delay: 1.9s; }
 
@@ -292,6 +293,42 @@ body.light-mode .content-section {
   font-size: 2em;
   border-bottom: 2px solid var(--primary-color);
   padding-bottom: 10px;
+}
+
+.skills-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.skill-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 110px;
+  height: 110px;
+  background-color: var(--card-back-bg);
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  padding: 15px;
+  box-sizing: border-box;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  color: var(--text-color);
+}
+
+.skill-item:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+.skill-item svg {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 10px;
+  fill: var(--primary-color);
 }
 
 .experience-item {
